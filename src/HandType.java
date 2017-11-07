@@ -1,7 +1,7 @@
 public enum HandType {
     THREE_OF_A_KIND,
     STRAIGHT,
-    FLUSH,
+    STRAIGHTFLUSH,
     FOUR_OF_A_KIND,
     BOSH
 }

@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 
 public class Hand {
     public ArrayList<Card> cards;
@@ -39,11 +36,8 @@ public class Hand {
         if (isThreeOfKind()){
             retval = HandType.THREE_OF_A_KIND;
         }
-        if (isStraight()){
-            retval = HandType.STRAIGHT;
-        }
-        if (isFlush()){
-            retval = HandType.FLUSH;
+        if (isStrFlush()){
+            retval = HandType.STRAIGHTFLUSH;
         }
         if (isFourOfAKind()){
             retval = HandType.FOUR_OF_A_KIND;
@@ -65,8 +59,8 @@ public class Hand {
             case STRAIGHT:
                 System.out.print("STRAIGHT: " );
                 break;
-            case FLUSH:
-                System.out.print("FLUSH: ");
+            case STRAIGHTFLUSH:
+                System.out.print("STRAIGHTFLUSH: ");
                 break;
             case BOSH:
                 System.out.print("BOSH: ");
@@ -111,10 +105,10 @@ public class Hand {
         return false;
     }
 
-    public boolean isStraight() {//додумать до трехкарточного!!!!!!
+    public boolean isStraight(ArrayList<Card> listFromFlush) {//додумать до трехкарточного!!!!!!
         ArrayList<Integer> straightList = new ArrayList<>();
 
-        for (Card c : cards) {
+        for (Card c : listFromFlush) {
             straightList.add(c.getRank());
         }
 
@@ -123,8 +117,9 @@ public class Hand {
 
         int minimum = straightList.get(0);
         ArrayList<Integer> expectedSequence = new ArrayList<>();
+        //ArrayList<Integer> expectedSequence2
 
-        for (int i = minimum; i < minimum + 5; i++) {// поменять на три
+        for (int i = minimum; i < minimum + listFromFlush.size(); i++) {// поменять на три
             expectedSequence.add(i);
         }
         HashSet<Integer> givenSequence = new HashSet<>();
@@ -138,21 +133,21 @@ public class Hand {
         }
     }
 
-    public boolean isFlush(){//переделать на isStraigthFlush если выполнится условие стрита
-        HashMap<String, Integer> charCount = new HashMap<>();
+    public boolean isStrFlush(){//переделать на isStraigthFlush если выполнится условие стрита
+        HashSet<String> suitKeys = new HashSet<>();
+        ArrayList<Card> cardsToStrFlush = new ArrayList<>();
+       // Map<String, ArrayList<Card>> countOfSuits = new HashMap<>();
+        //for (Suit suit : Suit.values()){
+        //    countOfSuits.put(suit.getSuit(), null);
+        //}
 
         for (Card c : cards){
-            if (charCount.containsKey(c.getSuit())){
-                int count = charCount.get(c.getSuit());
-                charCount.put(c.getSuit(), count + 1);
-            }
-            else
-                charCount.put(c.getSuit(), 1);
-        }
-
-        for (String str : charCount.keySet()){
-            if (charCount.get(str) >= 5){
-                return true;
+           if (suitKeys.contains(c.getSuit())){//ксли содержит ключ
+               cardsToStrFlush.add(c);
+            } else {
+               suitKeys.add(c.getSuit());
+            }if(cardsToStrFlush.size() >=3){
+                return isStraight(cardsToStrFlush);
             }
         }
         return false;
