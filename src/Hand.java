@@ -1,7 +1,10 @@
+
 import java.util.*;
 
 public class Hand {
     public ArrayList<Card> cards;
+    public ArrayList<Card> cardsToZero;
+    int rezultZero = 0;
 
     public Hand(){
         cards = new ArrayList<>();
@@ -67,22 +70,20 @@ public class Hand {
         }
     }
 
-    public boolean isThreeOfKind(){
-        HashMap<String, Integer> numberCount = new HashMap<>();
-        for (Card c: cards){
-            if(numberCount.containsKey(c.getStringRank())){
-                int count = numberCount.get(c.getStringRank());
-                numberCount.put(c.getStringRank(), count + 1);
-            }
-            else
-                numberCount.put(c.getStringRank(), 1);
+    public boolean isThreeOfKind() {
+        HashMap<String, List<Card>> map = new HashMap<>();
+        for (Card c : cards) {
+            map.computeIfAbsent(c.getStringRank(), k -> new ArrayList<>()).add(c);
         }
-
-        for (String str : numberCount.keySet()){
-            if (numberCount.get(str)>=3){
+        for(String str : map.keySet())
+            if (map.get(str).size()==3){
+                cardsToZero = new ArrayList<>();
+                cardsToZero = (ArrayList<Card>) map.get(str);
+                rezultZero = cardsToZero.get(0).getRank();
+                rezultZero = rezultZero*3;
+                //System.out.println("from method rezult :" + rezultZero);
                 return true;
             }
-        }
         return false;
     }
 

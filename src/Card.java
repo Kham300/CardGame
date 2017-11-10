@@ -23,10 +23,6 @@ public class Card {
         return rank.getStringRank();
     }
 
-   // public int getStraightRank(){
-   //     return straightRank.getStraightRankValue();
-   // }
-
     public String toString(){
         String str = "";
             str += rank.getStringRank() + suit.getSuit();

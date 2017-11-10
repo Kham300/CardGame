@@ -8,8 +8,8 @@ public enum Rank {
     SEVEN(7, "7"),
     EIGHT(8, "8"),
     NINE(9, "9"),
-    TEN(11, "10"),
-    JACK(12, "J"),
+    TEN(10, "10"),
+    JACK(11, "J"),
     QUEEN(12, "Q"),
     KING(13, "K");
 

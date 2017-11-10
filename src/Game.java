@@ -9,7 +9,7 @@ public class Game {
             h1 = new Hand();
             //deal cards to our
             d1.deal(h1, 5);
-            if (h1.isStrFlush()) {
+            if (h1.isThreeOfKind()) {
                 h1.printHandType();
                 System.out.println(h1.showHand()+ "\n");
            // } else if (h1.isThreeOfKind()){
