@@ -3,8 +3,9 @@ import java.util.*;
 
 public class Hand {
     public ArrayList<Card> cards;
-    public ArrayList<Card> cardsToZero;
+    //public ArrayList<Card> cardsToZero;
     int rezultZero = 0;
+    int total =0;
 
     public Hand(){
         cards = new ArrayList<>();
@@ -26,20 +27,23 @@ public class Hand {
             str += c.toString();
            // str += "total points = " + getTotal() + "\n";
         }
-        return  str   += " Points = " + getTotal();
+        return  str ;
+    }
+
+    public int getRezalt(){
+        return total;
+    }
+
+    public String getFirstCardSuit(){
+        return cards.get(0).getStringRank();
     }
 
     public HandType evaluateHandType(){
         HandType retval = null;
-
-        /*if (isOnePair()){
-            retval = HandType.TWO_PAIR;
-        }*/
-
-        if (isThreeOfKind()){
+        if (isThreeOfKind()!=0){
             retval = HandType.THREE_OF_A_KIND;
         }
-        if (isStrFlush()){
+        if (isStrFlush()!=0){
             retval = HandType.STRAIGHTFLUSH;
         }
         if (isFourOfAKind()){
@@ -54,37 +58,44 @@ public class Hand {
     public void printHandType(){
         switch (evaluateHandType()){
             case THREE_OF_A_KIND:
-                System.out.print("THEE OF A KIND: ");
+                //System.out.print("THEE OF A KIND: ");
+                //System.out.println(getTotal(isThreeOfKind()));
+                total = getTotal(isThreeOfKind());
                 break;
             case FOUR_OF_A_KIND:
-                System.out.print("FOUR OF A KIND: ");
+               // System.out.print("FOUR OF A KIND: ");
                 break;
             case STRAIGHT:
-                System.out.print("STRAIGHT: " );
+               // System.out.print("STRAIGHT: " );
                 break;
             case STRAIGHTFLUSH:
-                System.out.print("STRAIGHTFLUSH: ");
+                //System.out.println(getTotal(isStrFlush()));
+                total = getTotal(isStrFlush());
+                //System.out.print("STRAIGHTFLUSH: ");
                 break;
             case BOSH:
-                System.out.print("BOSH: ");
+               // System.out.println(getTotal(0));
+                total = getTotal(0);
+               // System.out.print("BOSH: ");
         }
     }
 
-    public boolean isThreeOfKind() {
+    public int isThreeOfKind() {
         HashMap<String, List<Card>> map = new HashMap<>();
         for (Card c : cards) {
             map.computeIfAbsent(c.getStringRank(), k -> new ArrayList<>()).add(c);
         }
         for(String str : map.keySet())
             if (map.get(str).size()==3){
-                cardsToZero = new ArrayList<>();
-                cardsToZero = (ArrayList<Card>) map.get(str);
-                rezultZero = cardsToZero.get(0).getRank();
-                rezultZero = rezultZero*3;
-                //System.out.println("from method rezult :" + rezultZero);
-                return true;
+                Card c  = map.get(str).get(0);
+                rezultZero = c.getRank()*3;
+                if (rezultZero >= 30) {
+                    return rezultZero = 30;
+                }else {
+                    return rezultZero;
+                }
             }
-        return false;
+        return 0;
     }
 
     public boolean isFourOfAKind(){
@@ -134,34 +145,47 @@ public class Hand {
         }
     }
 
-    public boolean isStrFlush(){//переделать на isStraigthFlush если выполнится условие стрита
-        HashSet<String> suitKeys = new HashSet<>();
+    public int isStrFlush(){//переделать на isStraigthFlush если выполнится условие стрита
+        int rezult =0;
+        HashMap<String, List<Card>> map = new HashMap<>();
         ArrayList<Card> cardsToStrFlush = new ArrayList<>();
-       // Map<String, ArrayList<Card>> countOfSuits = new HashMap<>();
-        //for (Suit suit : Suit.values()){
-        //    countOfSuits.put(suit.getSuit(), null);
-        //}
+        for (Card c : cards) {
+            map.computeIfAbsent(c.getSuit(), k -> new ArrayList<>()).add(c);
+        }
 
-        for (Card c : cards){
-           if (suitKeys.contains(c.getSuit())){//ксли содержит ключ
-               cardsToStrFlush.add(c);
-            } else {
-               suitKeys.add(c.getSuit());
-            }if(cardsToStrFlush.size() >=3){
-                return isStraight(cardsToStrFlush);
+        for(String str : map.keySet()) {
+            if (map.get(str).size() >= 3) {
+                cardsToStrFlush = (ArrayList<Card>) map.get(str);
             }
         }
-        return false;
+
+        if (cardsToStrFlush.size()!=0){
+            if (isStraight(cardsToStrFlush)){
+                for (Card card : cardsToStrFlush){
+                    if (card.getRank() > 10){
+                        rezult += 10;
+                    }else {
+                        rezult += card.getRank();
+                    }
+                }
+                return rezult;
+            }
+        }
+        return 0;
     }
 
 
     //return total of hand
-    public int getTotal(){
+    public int getTotal(int zero){
         int totalPTS = 0;
-        for (int i = 0; i < cards.size(); i++){
-            totalPTS += cards.get(i).getRank();
+        for (Card c : cards){
+            if (c.getRank() > 10){
+                totalPTS += 10;
+            }else {
+                totalPTS += c.getRank();
+            }
         }
-        return totalPTS;
+        return totalPTS-zero;
     }
 
     public boolean give(Card card, Hand otherHand){
