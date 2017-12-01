@@ -1,26 +1,25 @@
-import java.util.Random;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class Deck extends Hand {
-    Random random = new Random();
-    public void populate(){//creates deck of cards
+    public ArrayList populate(){//creates deck of cards
+        clear();
         for (Suit suit : Suit.values()){
             for (Rank rank : Rank.values()){
                 Card card = new Card(rank, suit);
-                this.add(card);//add not form arraylist its just our method, allredy adds to arraylist
+                cards.add(card);//add not form arraylist its just our method, allredy adds to arraylist
             }
         }
+        return cards;
     }
 
     public void shuffle(){
-        for (int i = cards.size() -1; i > 0; i--){
-            //swap a random card between the beginning
-            //and last card of the loop
-            int pick = random.nextInt(i);//picks card random
-            Card randomCard = cards.get(pick);
-            Card lastCard = cards.get(i);
-            cards.set(i, randomCard);
-            cards.set(pick, lastCard);
-        }
+        Collections.shuffle(cards);
+    }
+
+
+    public void clear(){
+        cards.clear();
     }
 
     public void deal(Hand[] hands, int perHand){
@@ -30,11 +29,26 @@ public class Deck extends Hand {
             }
         }
     }
+    public void dealNoRemovingCard(Hand hand, int perHand){
+        //for one player
+        for (int i = 0; i < perHand; i++){
+            this.giveNoRemove(cards.get(i), hand);
+        }
+    }
 
     public void deal(Hand hand, int perHand){
         //for one player
         for (int i = 0; i < perHand; i++){
             this.give(cards.get(0), hand);
         }
+    }
+
+    public void printDeck() {
+        int icount= 0;
+        for (Card c : cards) {
+            System.out.print(c);
+            icount ++;
+        }
+        System.out.println(icount);
     }
 }

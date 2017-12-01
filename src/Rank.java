@@ -16,9 +16,9 @@ public enum Rank {
     private final int rankValue;
     private final String rankString;
 
-    private Rank( int rankValue, String rankString){
+    Rank( int rankValue, String rankString){
         this.rankValue = rankValue;
-        this.rankString =rankString;
+        this.rankString = rankString;
     }
 
     public int getRank(){

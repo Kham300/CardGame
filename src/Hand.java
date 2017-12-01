@@ -3,7 +3,6 @@ import java.util.*;
 
 public class Hand {
     public ArrayList<Card> cards;
-    //public ArrayList<Card> cardsToZero;
     int rezultZero = 0;
     int total =0;
 
@@ -11,9 +10,6 @@ public class Hand {
         cards = new ArrayList<>();
     }
 
-    public void clear(){
-        cards.clear();
-    }
 
     public void add(Card card){
         cards.add(card);
@@ -25,18 +21,17 @@ public class Hand {
         String str ="";
         for (Card c : cards) {
             str += c.toString();
-           // str += "total points = " + getTotal() + "\n";
         }
-        return  str ;
+        return  str +"\n"  +  "total points = " + getRezalt() ;
     }
 
     public int getRezalt(){
         return total;
     }
 
-    public String getFirstCardSuit(){
-        return cards.get(0).getStringRank();
-    }
+   /* public String getFirstCardSuit(){
+        return cards.get(3).getStringRank();
+    }*/
 
     public HandType evaluateHandType(){
         HandType retval = null;
@@ -173,8 +168,6 @@ public class Hand {
         }
         return 0;
     }
-
-
     //return total of hand
     public int getTotal(int zero){
         int totalPTS = 0;
@@ -193,6 +186,15 @@ public class Hand {
             return false;
         }else{
             cards.remove(card);
+            otherHand.add(card);
+            return true;
+        }
+    }
+
+    public boolean giveNoRemove(Card card, Hand otherHand){
+        if (!cards.contains(card)){
+            return false;
+        }else{
             otherHand.add(card);
             return true;
         }

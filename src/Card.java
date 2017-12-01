@@ -20,7 +20,7 @@ public class Card {
         return rank.getRank();
     }
     public String getStringRank(){
-        return rank.getStringRank();
+        return this.rank.getStringRank();
     }
 
     public String toString(){
