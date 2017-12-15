@@ -1,7 +1,5 @@
-import java.util.HashMap;
-
 public class Game {
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         Deck d1 = new Deck();
         Hand[] hands;
         Hand h1, h2, h3, dealer;
@@ -14,8 +12,8 @@ public class Game {
         d1.populate();
         d1.shuffle();
         h1 = new Hand();
-       // h2 = new Hand();
-       // h3 = new Hand();
+        // h2 = new Hand();
+        // h3 = new Hand();
         hands = new Hand[]{h1};
         //d1.printDeck();
         //deal cards to our
@@ -24,14 +22,14 @@ public class Game {
             h.printHandType();
             System.out.println(h.showHand());
         }
-       // d1.printDeck();
-        for (int i = 0; i < 1000000; i++){
+        // d1.printDeck();
+        for (int i = 0; i < 1000000; i++) {
             d1.shuffle();
             dealer = new Hand();
             d1.dealNoRemovingCard(dealer, 5);
             dealer.printHandType();
-           totalRezult += dealer.getRezalt();
-            rezultMap.merge(dealer.cards.get(0).printRank(),dealer.getRezalt(), (a, b) -> a += b);
+            totalRezult += dealer.getRezalt();
+            rezultMap.merge(dealer.cards.get(0).printRank(), dealer.getRezalt(), (a, b) -> a += b);
             if (dealer.getRezalt() > 32) {
                 howManyPlayGame.merge(dealer.cards.get(0).printRank(), count, (a, b) -> a += 1);
             }
@@ -40,14 +38,15 @@ public class Game {
             System.out.println(str + ": " + rezultMap.get(str));
         }
 
-        for (String str : howManyPlayGame.keySet()){
+        for (String str : howManyPlayGame.keySet()) {
             System.out.println(str + ": " + howManyPlayGame.get(str));
             countOfAllNotGames += howManyPlayGame.get(str);
         }
         System.out.println(totalRezult);
         System.out.println(countOfAllNotGames / 1000000);
 
-    }
+        // }
+    }*/
 }
 
 

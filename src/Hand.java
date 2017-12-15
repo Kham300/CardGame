@@ -4,7 +4,7 @@ import java.util.*;
 public class Hand {
     public ArrayList<Card> cards;
     int rezultZero = 0;
-    int total =0;
+    int total = 0;
 
     public Hand(){
         cards = new ArrayList<>();
@@ -28,10 +28,6 @@ public class Hand {
     public int getRezalt(){
         return total;
     }
-
-   /* public String getFirstCardSuit(){
-        return cards.get(3).getStringRank();
-    }*/
 
     public HandType evaluateHandType(){
         HandType retval = null;

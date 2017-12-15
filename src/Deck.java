@@ -44,7 +44,7 @@ public class Deck extends Hand {
     }
 
     public void printDeck() {
-        int icount= 0;
+        int icount = 0;
         for (Card c : cards) {
             System.out.print(c);
             icount ++;

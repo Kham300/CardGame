@@ -1,4 +1,4 @@
-public class Card {
+public class Card implements Comparable<Card> {
     private Suit suit;
     private Rank rank;
     //private StraightRank straightRank;
@@ -27,5 +27,14 @@ public class Card {
         String str = "";
             str += rank.getStringRank() + suit.getSuit();
         return str;
+    }
+
+
+    @Override
+    public int compareTo(Card o) {
+        final int rankComparison = Integer.compare(this.rank.getRank(), o.rank.getRank());
+            return rankComparison;
+
+
     }
 }
